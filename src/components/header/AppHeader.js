@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom';
 import Storage from '@material-ui/icons/Storage'
 import AddComment from '@material-ui/icons/AddComment'
 import logo from "../../logo.svg";
+import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
 
 const HEADER_BUTTONS = [
 
@@ -13,10 +14,16 @@ const HEADER_BUTTONS = [
         icon: (<Storage fontSize={"small"}/>),
     },
     {
+        name: 'Atendees', /* Link do tablicy z listą rekordów/danych */
+        href: '/atendees',
+        icon: (<PeopleAltIcon fontSize={"small"}/>),
+    },
+    {
         name: 'Home',
         href: '/',
         icon: (<></>),  /* Brak ikony */
     },
+
 ]
 
 const AppHeader = () => {

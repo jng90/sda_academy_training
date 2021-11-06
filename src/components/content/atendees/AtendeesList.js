@@ -1,15 +1,26 @@
 import CardComponent from "../../CardComponent";
-import classes from './TrainingsList.module.css';
-import {Link} from "react-router-dom";
+import classes from './AtendeesList.module.css'
 import {Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@material-ui/core";
+import {Link} from "react-router-dom";
 import {useEffect, useState} from "react";
 import axios from "axios";
 
-const TrainingsList = () => {
+const AtendeesList = () => {
     const [rows, setRows] = useState([]);
 
+    const handleRemoveRecord = (row) => {
+        axios.delete("http://localhost:8080/attendees/" + row.id)
+            .then((data) => {
+                console.log("Otrzymaliśmy sukces odpowiedź!");
+                pullRecordsFromDatabaseServer();
+            })
+            .catch((error) => {
+                console.log("Otrzymaliśmy odpowiedź o błędzie!");
+            });
+    }
+
     const pullRecordsFromDatabaseServer = () => {
-        axios.get("http://localhost:8080/trainings")
+        axios.get("http://localhost:8080/attendees")
             .then((data) => {
                 // data ma pole data
                 console.log("Otrzymaliśmy sukces odpowiedź!")
@@ -22,42 +33,35 @@ const TrainingsList = () => {
             });
     }
 
-    const handleRemoveRecord = (row) => {
-        axios.delete("http://localhost:8080/trainings/" + row.id)
-            .then((data) => {
-                console.log("Otrzymaliśmy sukces odpowiedź!");
-                pullRecordsFromDatabaseServer();
-            })
-            .catch((error) => {
-                console.log("Otrzymaliśmy odpowiedź o błędzie!");
-            });
-    }
-
     useEffect(() => {
         pullRecordsFromDatabaseServer();
     }, [])
 
+
     return (
         <div>
             <div className={classes.AddButtonContainer}>
-                <Link to={"/trainings/add"} className={classes.TrainingsAddButton}>
+                <Link to={"/atendees/add"} className={classes.AtendeesAddButton}>
                     <Button variant="outlined">Add New</Button>
                 </Link>
             </div>
-            <CardComponent title={'Trainings List'}>
+            <CardComponent title={'Atendees List'}>
                 <div className={classes.TableContainer}>
                     <TableContainer component={Paper}>
                         <Table sx={{minWidth: 650}} aria-label="simple table">
                             <TableHead>
                                 <TableRow>
                                     <TableCell>Id</TableCell>
+                                    <TableCell align="right">Id</TableCell>
                                     <TableCell align="right">Name</TableCell>
-                                    <TableCell align="right">Trainer</TableCell>
-                                    <TableCell align="right">Date Starts</TableCell>
-                                    <TableCell align="right">Length</TableCell>
-                                    <TableCell align="right">Delete</TableCell>
-                                    <TableCell align="right">Edit</TableCell>
-                                    <TableCell align="right">Details</TableCell>
+                                    <TableCell align="right">Surname</TableCell>
+                                    <TableCell align="right">Pesel</TableCell>
+                                    <TableCell align="right">
+                                    </TableCell>
+                                    <TableCell align="right">
+                                    </TableCell>
+                                    <TableCell align="right">
+                                    </TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -70,17 +74,18 @@ const TrainingsList = () => {
                                             {row.id}
                                         </TableCell>
                                         <TableCell align="right">{row.name}</TableCell>
-                                        <TableCell align="right">{row.trainer}</TableCell>
-                                        <TableCell align="right">{row.dateStart}</TableCell>
-                                        <TableCell align="right">{row.length}</TableCell>
+                                        <TableCell align="right">{row.surname}</TableCell>
+                                        <TableCell align="right">{row.pesel}</TableCell>
                                         <TableCell align="right">
-                                            <Button onClick={()=> {handleRemoveRecord(row)}}>Delete</Button>
+                                            <Button onClick={() => {
+                                                handleRemoveRecord(row)
+                                            }}>Delete</Button>
                                         </TableCell>
-                                        <TableCell align="right">Edit</TableCell>
                                         <TableCell align="right">
-                                            <Link to={`/trainings/details/${row.id}`} className={classes.TrainingsAddButton}>
-                                                <Button>Details</Button>
-                                            </Link>
+                                            <Button onClick={handleRemoveRecord}>Edit</Button>
+                                        </TableCell>
+                                        <TableCell align="right">
+                                            <Button onClick={handleRemoveRecord}>Details</Button>
                                         </TableCell>
                                     </TableRow>
                                 ))}
@@ -92,4 +97,4 @@ const TrainingsList = () => {
         </div>
     )
 }
-export default TrainingsList;
+export default AtendeesList;
