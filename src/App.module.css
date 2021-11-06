@@ -23,8 +23,3 @@ body{
   flex-direction: column;
 }
 
-.AppContent{
-  background-color: var(--content-background-color);
-  margin-top: 5px;
-  min-height: 80vh;
-}
