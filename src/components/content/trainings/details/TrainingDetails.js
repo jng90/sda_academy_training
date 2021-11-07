@@ -9,7 +9,7 @@ import AtendeesTable from "../../atendees/AtendeesTable";
 const TrainingDetails = () => {
     const {trainingId} = useParams();
     const [training, setTraining] = useState({
-        'atendees':[],
+        'atendees': [],
     });
 
     const pullRecords = () => {
@@ -24,10 +24,10 @@ const TrainingDetails = () => {
             .catch((error) => {
                 console.log("Otrzymaliśmy odpowiedź o błędzie!")
             });
-
     }
+
     useEffect(() => {
-    pullRecords();
+        pullRecords();
     }, []);
 
     return (
@@ -60,6 +60,11 @@ const TrainingDetails = () => {
                     </Grid>
                 </Grid>
             </CardComponent>
+            <div className={classes.AddButtonContainer}>
+                <Link to={`/trainings/add/atendee/${training.id}`} className={classes.TrainingsAddButton}>
+                    <Button variant="outlined">Add New</Button>
+                </Link>
+            </div>
             <AtendeesTable rows={training.atendees} refreshData={pullRecords}/>
         </div>
     )

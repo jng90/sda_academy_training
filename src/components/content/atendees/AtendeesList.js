@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 import {Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@material-ui/core";
 import {useEffect, useState} from "react";
 import axios from "axios";
-import AttendeesTable from "./AtendeesTable";
+import AtendeesTable from "./AtendeesTable";
 
 const AttendeesList = () => {
     const [rows, setRows] = useState([]);
@@ -35,7 +35,7 @@ const AttendeesList = () => {
                     <Button variant="outlined">Add New</Button>
                 </Link>
             </div>
-            <AttendeesTable rows={rows} refreshData={pullRecordsFromDatabaseServer()}/>
+            <AtendeesTable rows={rows} refreshData={pullRecordsFromDatabaseServer()}/>
         </div>
     )
 }
