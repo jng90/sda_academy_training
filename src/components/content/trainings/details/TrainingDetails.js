@@ -4,12 +4,15 @@ import {Link, useParams} from "react-router-dom";
 import {Button, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@material-ui/core";
 import {useEffect, useState} from "react";
 import axios from "axios";
+import AtendeesTable from "../../atendees/AtendeesTable";
 
 const TrainingDetails = () => {
     const {trainingId} = useParams();
-    const [training, setTraining] = useState({});
+    const [training, setTraining] = useState({
+        'atendees':[],
+    });
 
-    useEffect(() => {
+    const pullRecords = () => {
         axios.get(`http://localhost:8080/trainings/${trainingId}`)
             .then((data) => {
                 // data ma pole data
@@ -21,6 +24,10 @@ const TrainingDetails = () => {
             .catch((error) => {
                 console.log("Otrzymaliśmy odpowiedź o błędzie!")
             });
+
+    }
+    useEffect(() => {
+    pullRecords();
     }, []);
 
     return (
@@ -53,9 +60,7 @@ const TrainingDetails = () => {
                     </Grid>
                 </Grid>
             </CardComponent>
-                <CardComponent title={'Training Attendees'}>
-
-                </CardComponent>
+            <AtendeesTable rows={training.atendees} refreshData={pullRecords}/>
         </div>
     )
 }
